@@ -5,6 +5,7 @@ import Credentials from "@/components/Credentials";
 import Toolkit from "@/components/Toolkit";
 import Contact, { Footer } from "@/components/Contact";
 import { CopilotField } from "@/components/CopilotRibbon";
+import ChatBot from "@/components/ChatBot";
 
 export default function Home() {
   return (
@@ -19,6 +20,7 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
+      <ChatBot />
     </>
   );
 }
