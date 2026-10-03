@@ -58,9 +58,9 @@ function DataverseVisual() {
   return (
     <div className="mock mock-data" aria-hidden="true">
       <svg viewBox="0 0 300 170" className="data-svg">
-        <line x1="80" y1="45" x2="150" y2="80" stroke="#A19F9D" strokeWidth="1.5" />
-        <line x1="220" y1="45" x2="150" y2="80" stroke="#A19F9D" strokeWidth="1.5" />
-        <line x1="150" y1="105" x2="150" y2="140" stroke="#A19F9D" strokeWidth="1.5" />
+        <line x1="80" y1="45" x2="150" y2="80" style={{ stroke: "var(--ink-soft)" }} strokeWidth="1.5" />
+        <line x1="220" y1="45" x2="150" y2="80" style={{ stroke: "var(--ink-soft)" }} strokeWidth="1.5" />
+        <line x1="150" y1="105" x2="150" y2="140" style={{ stroke: "var(--ink-soft)" }} strokeWidth="1.5" />
       </svg>
       <div className="entity entity-a">
         <strong>Account</strong>

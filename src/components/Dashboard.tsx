@@ -23,7 +23,7 @@ function CertDonut() {
   const segments = [...counts.entries()].map(([label, value]) => ({
     label,
     value,
-    color: ISSUER_COLORS[label] ?? "#605E5C",
+    color: ISSUER_COLORS[label] ?? "#8A8886",
   }));
   const total = segments.reduce((a, s) => a + s.value, 0);
 
@@ -43,7 +43,7 @@ function CertDonut() {
       <h3>Certifications by issuer</h3>
       <div className="donut-wrap">
         <svg viewBox="0 0 200 200" className="donut" role="img" aria-label="Certifications by issuer">
-          <circle cx="100" cy="100" r={r} fill="none" stroke="#EDEBE9" strokeWidth="26" />
+          <circle cx="100" cy="100" r={r} fill="none" style={{ stroke: "var(--surface-deep)" }} strokeWidth="26" />
           {arcs.map((arc) => (
             <circle
               key={arc.label}

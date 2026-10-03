@@ -1,4 +1,5 @@
 import { profile } from "@/data/portfolio";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Nav() {
   return (
@@ -13,6 +14,7 @@ export default function Nav() {
           <a href="#toolkit">Toolkit</a>
           <a href="#contact">Contact</a>
         </nav>
+        <ThemeToggle />
         <a className="btn btn-primary nav-connect" href={profile.linkedInUrl} target="_blank" rel="noreferrer">
           Connect
         </a>
