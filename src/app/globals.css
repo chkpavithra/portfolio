@@ -354,21 +354,248 @@ a:hover {
 }
 
 .hero-copilot {
-  position: absolute;
-  right: -30px;
-  top: 110px;
-  opacity: 0.5;
-  pointer-events: none;
-}
-
-.hero-copilot-float {
-  animation: drift-a 22s ease-in-out infinite;
+  display: none; /* replaced visually by the profile-photo orbit */
 }
 
 .hero-content {
   position: relative;
   max-width: 1120px;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  align-items: center;
+  gap: 40px;
+}
+
+.hero-text {
+  min-width: 0;
+}
+
+.hero-orbit-side {
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Profile photo orbit ────────────────────────────────────────────────── */
+
+.profile-orbit-float {
+  animation: orbit-float 7s ease-in-out infinite;
+}
+
+@keyframes orbit-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.profile-orbit {
+  --size: 400px;
+  --photo: calc(var(--size) * 0.58);
+  --ring: calc(var(--size) * 0.63);
+  --orbit-r: calc(var(--size) * 0.435);
+  --badge: calc(var(--size) * 0.117);
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  max-width: 88vw;
+  aspect-ratio: 1;
+}
+
+/* faint dashed track the badges travel along */
+.orbit-track {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(var(--orbit-r) * 2);
+  height: calc(var(--orbit-r) * 2);
+  transform: translate(-50%, -50%);
+  border: 1.5px dashed var(--border);
+  border-radius: 50%;
+  opacity: 0.9;
+  z-index: 0;
+}
+
+/* soft pulsing glow behind the ring */
+.orbit-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--ring);
+  height: var(--ring);
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    #7b61ff,
+    #2e7cf6,
+    #00bcf2,
+    #00b294,
+    #7fba00,
+    #ffb900,
+    #f7630c,
+    #e3008c,
+    #7b61ff
+  );
+  filter: blur(24px);
+  opacity: 0.45;
+  z-index: 0;
+  animation: orbit-glow-pulse 5s ease-in-out infinite;
+}
+
+[data-theme="dark"] .orbit-glow {
+  opacity: 0.6;
+}
+
+@keyframes orbit-glow-pulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.07);
+    opacity: 0.62;
+  }
+}
+
+/* the glowing rotating gradient ring around the photo */
+.orbit-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--ring);
+  height: var(--ring);
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    #7b61ff,
+    #2e7cf6,
+    #00bcf2,
+    #00b294,
+    #7fba00,
+    #ffb900,
+    #f7630c,
+    #e3008c,
+    #7b61ff
+  );
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 8px),
+    #000 calc(100% - 7px)
+  );
+  mask: radial-gradient(farthest-side, transparent calc(100% - 8px), #000 calc(100% - 7px));
+  z-index: 1;
+  animation: orbit-rotate 16s linear infinite;
+}
+
+@keyframes orbit-rotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.orbit-photo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--photo);
+  height: var(--photo);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--surface);
+  box-shadow: var(--shadow-2);
+  z-index: 2;
+}
+
+.orbit-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* rotor carries the badges around the circle */
+.orbit-rotor {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  animation: orbit-rotate-full 32s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes orbit-rotate-full {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.orbit-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--badge);
+  height: var(--badge);
+  margin: calc(var(--badge) / -2) 0 0 calc(var(--badge) / -2);
+  transform: rotate(var(--a)) translateY(calc(var(--orbit-r) * -1)) rotate(calc(var(--a) * -1));
+}
+
+/* counter-rotation keeps each badge upright while the rotor spins */
+.orbit-badge-spin {
+  display: block;
+  width: 100%;
+  height: 100%;
+  animation: orbit-rotate-rev 32s linear infinite;
+}
+
+@keyframes orbit-rotate-rev {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.orbit-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid var(--surface);
+  box-shadow: var(--shadow-2);
+  pointer-events: auto;
+}
+
+.orbit-badge-letter {
+  font-size: calc(var(--badge) * 0.44);
+  font-weight: 700;
+  line-height: 1;
+  color: #ffffff;
 }
 
 .badge-open {
@@ -1495,8 +1722,13 @@ a:hover {
     margin-left: auto;
   }
 
-  .hero-copilot {
-    opacity: 0.28;
+  .hero-content {
+    grid-template-columns: 1fr;
+    gap: 44px;
+  }
+
+  .profile-orbit {
+    --size: min(350px, 86vw);
   }
 }
 
@@ -1504,6 +1736,10 @@ a:hover {
   .cert-grid,
   .solution-grid {
     grid-template-columns: 1fr;
+  }
+
+  .profile-orbit {
+    --size: min(300px, 88vw);
   }
 
   .chat-panel {
@@ -1535,6 +1771,11 @@ a:hover {
   .roam,
   .copilot-spin,
   .hero-copilot-float,
+  .profile-orbit-float,
+  .orbit-rotor,
+  .orbit-badge-spin,
+  .orbit-ring,
+  .orbit-glow,
   .chat-panel,
   .chat-typing span {
     animation: none !important;

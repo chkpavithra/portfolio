@@ -1,5 +1,6 @@
 import { about, coreSkills, profile } from "@/data/portfolio";
 import CopilotRibbon from "./CopilotRibbon";
+import ProfileOrbit from "./ProfileOrbit";
 
 export default function Hero() {
   return (
@@ -11,33 +12,39 @@ export default function Hero() {
       </div>
 
       <div className="hero-content">
-        <span className="badge-open">● {profile.openToWork}</span>
-        <h1 className="hero-name">{profile.name}</h1>
-        <p className="hero-headline">{profile.headline}</p>
+        <div className="hero-text">
+          <span className="badge-open">● {profile.openToWork}</span>
+          <h1 className="hero-name">{profile.name}</h1>
+          <p className="hero-headline">{profile.headline}</p>
 
-        <p className="hero-proof">
-          <strong>{profile.connections}</strong> connections&nbsp;&nbsp;·&nbsp;&nbsp;
-          <strong>{profile.followers}</strong> followers&nbsp;&nbsp;·&nbsp;&nbsp;{profile.location}
-        </p>
+          <p className="hero-proof">
+            <strong>{profile.connections}</strong> connections&nbsp;&nbsp;·&nbsp;&nbsp;
+            <strong>{profile.followers}</strong> followers&nbsp;&nbsp;·&nbsp;&nbsp;{profile.location}
+          </p>
 
-        <div className="hero-ctas">
-          <a className="btn btn-primary btn-lg" href={profile.linkedInUrl} target="_blank" rel="noreferrer">
-            Connect on LinkedIn
-          </a>
-          <a className="btn btn-outline btn-lg" href={`mailto:${profile.email}`}>
-            Email me
-          </a>
+          <div className="hero-ctas">
+            <a className="btn btn-primary btn-lg" href={profile.linkedInUrl} target="_blank" rel="noreferrer">
+              Connect on LinkedIn
+            </a>
+            <a className="btn btn-outline btn-lg" href={`mailto:${profile.email}`}>
+              Email me
+            </a>
+          </div>
+
+          <p className="hero-about">{about[0]}</p>
+
+          <ul className="chip-row" aria-label="Core skills">
+            {coreSkills.map((skill) => (
+              <li key={skill} className="chip">
+                {skill}
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <p className="hero-about">{about[0]}</p>
-
-        <ul className="chip-row" aria-label="Core skills">
-          {coreSkills.map((skill) => (
-            <li key={skill} className="chip">
-              {skill}
-            </li>
-          ))}
-        </ul>
+        <div className="hero-orbit-side">
+          <ProfileOrbit />
+        </div>
       </div>
     </section>
   );
